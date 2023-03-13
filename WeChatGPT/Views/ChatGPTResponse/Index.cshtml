@@ -1,0 +1,42 @@
+@using System.Web
+@model WeChatGPT.Models.ChatgptRecord
+
+@{
+    ViewData["Title"] = "ChatGPT回复内容";
+}
+
+<meta charset="utf-8" />
+
+<script src="~/js/markdown/showdown.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+<style>
+    div#ask {
+        font-size: 16px;
+        color: #d9769a
+    }
+
+    .answer-down {
+        color: cadetblue;
+    }
+</style>
+<article class="post-single">
+    <link href="~/css/DetailView.css" rel="stylesheet" />
+    <section class="container">
+        <div class="post-body">
+            <input id="hidAnswer" type="hidden" value="@Model.Answer" />
+            <div id="ask">Q：@Model.Question</div>
+            <h6 class="answer-down" as">ChatGPT回复：</h6>
+            <div id="response"></div>
+        </div>
+    </section>
+</article>
+<script>
+    var converter = new showdown.Converter();
+    var markdownText = document.getElementById("hidAnswer").value;
+    var htmlText = converter.makeHtml(markdownText);
+    document.getElementById("response").innerHTML = htmlText;
+    window.onload = () => {
+        hljs.highlightAll();
+    }
+</script>
