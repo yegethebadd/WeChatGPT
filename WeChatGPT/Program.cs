@@ -6,6 +6,10 @@ using Pomelo.EntityFrameworkCore.MySql;
 using WeChatGPT.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseKestrel(options =>
+{
+    options.AllowSynchronousIO = true;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
